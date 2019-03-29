@@ -2,8 +2,12 @@
   "author": "justadudewhohacks",
   "license": "MIT",
   "dependencies": {
-    "@tensorflow/tfjs-node": "^1.0.2",
+    "@tensorflow/tfjs-node": "^0.2.3",
     "canvas": "^2.0.1",
     "face-api.js": "../../"
+  },
+  "devDependencies": {
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
   }
 }

@@ -28,10 +28,9 @@ function extractBoundingBoxes(
 
   // TODO: fix this!, maybe better to use tf.gather here
   const indices: Point[] = []
-  const scoresData = scoresTensor.arraySync();
   for (let y = 0; y < scoresTensor.shape[0]; y++) {
     for (let x = 0; x < scoresTensor.shape[1]; x++) {
-      if (scoresData[y][x] >= scoreThreshold) {
+      if (scoresTensor.get(y, x) >= scoreThreshold) {
         indices.push(new Point(x, y))
       }
     }
@@ -45,14 +44,13 @@ function extractBoundingBoxes(
       Math.round((idx.x * CELL_STRIDE + CELL_SIZE) / scale)
     )
 
-    const score = scoresData[idx.y][idx.x]
+    const score = scoresTensor.get(idx.y, idx.x)
 
-    const regionsData = regionsTensor.arraySync()
     const region = new MtcnnBox(
-      regionsData[idx.y][idx.x][0],
-      regionsData[idx.y][idx.x][1],
-      regionsData[idx.y][idx.x][2],
-      regionsData[idx.y][idx.x][3]
+      regionsTensor.get(idx.y, idx.x, 0),
+      regionsTensor.get(idx.y, idx.x, 1),
+      regionsTensor.get(idx.y, idx.x, 2),
+      regionsTensor.get(idx.y, idx.x, 3)
     )
 
     return {

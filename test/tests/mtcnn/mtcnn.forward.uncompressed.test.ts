@@ -1,9 +1,9 @@
 import { IPoint } from '../../../src';
 import { loadImage, loadJson } from '../../env';
-import { describeWithBackend, describeWithNets } from '../../utils';
+import { describeWithNets } from '../../utils';
 import { expectMtcnnResults } from './expectMtcnnResults';
 
-describeWithBackend('mtcnn.forward', () => {
+describe('mtcnn.forward', () => {
 
   let imgEl: HTMLImageElement
   let expectedMtcnnLandmarks: IPoint[][]

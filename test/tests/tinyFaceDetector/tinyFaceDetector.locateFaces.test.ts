@@ -1,10 +1,10 @@
 import * as faceapi from '../../../src';
 import { loadImage } from '../../env';
 import { expectFaceDetections } from '../../expectFaceDetections';
-import { describeWithBackend, describeWithNets } from '../../utils';
+import { describeWithNets, expectAllTensorsReleased } from '../../utils';
 import { expectedTinyFaceDetectorBoxes } from './expectedBoxes';
 
-describeWithBackend('tinyFaceDetector.locateFaces', () => {
+describe('tinyFaceDetector.locateFaces', () => {
 
   let imgEl: HTMLImageElement
 

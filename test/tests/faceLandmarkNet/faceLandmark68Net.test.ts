@@ -2,14 +2,9 @@ import * as tf from '@tensorflow/tfjs-core';
 
 import { createCanvasFromMedia, IDimensions, isTensor3D, NetInput, Point, TMediaElement, toNetInput } from '../../../src';
 import { FaceLandmarks68 } from '../../../src/classes/FaceLandmarks68';
+import { FaceLandmark68Net } from '../../../src/faceLandmarkNet/FaceLandmark68Net';
 import { loadImage, loadJson } from '../../env';
-import {
-  describeWithBackend,
-  describeWithNets,
-  expectAllTensorsReleased,
-  expectMaxDelta,
-  expectPointClose,
-} from '../../utils';
+import { describeWithNets, expectAllTensorsReleased, expectMaxDelta, expectPointClose } from '../../utils';
 
 function getInputDims (input: tf.Tensor | TMediaElement): IDimensions {
   if (input instanceof tf.Tensor) {
@@ -19,7 +14,7 @@ function getInputDims (input: tf.Tensor | TMediaElement): IDimensions {
   return input
 }
 
-describeWithBackend('faceLandmark68Net', () => {
+describe('faceLandmark68Net', () => {
 
   let imgEl1: HTMLImageElement
   let imgEl2: HTMLImageElement
@@ -49,7 +44,7 @@ describeWithBackend('faceLandmark68Net', () => {
       expect(result.shift.y).toEqual(0)
       result.positions.forEach((pt, i) => {
         const { x, y } = faceLandmarkPositions1[i]
-        expectPointClose(pt, { x, y }, 3)
+        expectPointClose(pt, { x, y }, 2)
       })
     })
 
@@ -97,7 +92,7 @@ describeWithBackend('faceLandmark68Net', () => {
     })
 
     it('computes face landmarks for batch of tf.Tensor3D', async () => {
-      const inputs = [imgEl1, imgEl2, imgElRect].map(el => tf.browser.fromPixels(createCanvasFromMedia(el)))
+      const inputs = [imgEl1, imgEl2, imgElRect].map(el => tf.fromPixels(createCanvasFromMedia(el)))
 
       const faceLandmarkPositions = [
         faceLandmarkPositions1,
@@ -122,7 +117,7 @@ describeWithBackend('faceLandmark68Net', () => {
     })
 
     it('computes face landmarks for batch of mixed inputs', async () => {
-      const inputs = [imgEl1, tf.browser.fromPixels(createCanvasFromMedia(imgEl2)), tf.browser.fromPixels(createCanvasFromMedia(imgElRect))]
+      const inputs = [imgEl1, tf.fromPixels(createCanvasFromMedia(imgEl2)), tf.fromPixels(createCanvasFromMedia(imgElRect))]
 
       const faceLandmarkPositions = [
         faceLandmarkPositions1,
@@ -169,7 +164,7 @@ describeWithBackend('faceLandmark68Net', () => {
       })
 
       it('single tf.Tensor3D', async () => {
-        const tensor = tf.browser.fromPixels(createCanvasFromMedia(imgEl1))
+        const tensor = tf.fromPixels(createCanvasFromMedia(imgEl1))
 
         await expectAllTensorsReleased(async () => {
           const netInput = new NetInput([tensor])
@@ -181,7 +176,7 @@ describeWithBackend('faceLandmark68Net', () => {
       })
 
       it('multiple tf.Tensor3Ds', async () => {
-        const tensors = [imgEl1, imgEl1, imgEl1].map(el => tf.browser.fromPixels(createCanvasFromMedia(el)))
+        const tensors = [imgEl1, imgEl1, imgEl1].map(el => tf.fromPixels(createCanvasFromMedia(el)))
 
         await expectAllTensorsReleased(async () => {
           const netInput = new NetInput(tensors)
@@ -193,7 +188,7 @@ describeWithBackend('faceLandmark68Net', () => {
       })
 
       it('single batch size 1 tf.Tensor4Ds', async () => {
-        const tensor = tf.tidy(() => tf.browser.fromPixels(createCanvasFromMedia(imgEl1)).expandDims()) as tf.Tensor4D
+        const tensor = tf.tidy(() => tf.fromPixels(createCanvasFromMedia(imgEl1)).expandDims()) as tf.Tensor4D
 
         await expectAllTensorsReleased(async () => {
           const outTensor = await faceLandmark68Net.forwardInput(await toNetInput(tensor))
@@ -205,7 +200,7 @@ describeWithBackend('faceLandmark68Net', () => {
 
       it('multiple batch size 1 tf.Tensor4Ds', async () => {
         const tensors = [imgEl1, imgEl1, imgEl1]
-          .map(el => tf.tidy(() => tf.browser.fromPixels(createCanvasFromMedia(el)).expandDims())) as tf.Tensor4D[]
+          .map(el => tf.tidy(() => tf.fromPixels(createCanvasFromMedia(el)).expandDims())) as tf.Tensor4D[]
 
         await expectAllTensorsReleased(async () => {
           const outTensor = await faceLandmark68Net.forwardInput(await toNetInput(tensors))
@@ -232,7 +227,7 @@ describeWithBackend('faceLandmark68Net', () => {
       })
 
       it('single tf.Tensor3D', async () => {
-        const tensor = tf.browser.fromPixels(createCanvasFromMedia(imgEl1))
+        const tensor = tf.fromPixels(createCanvasFromMedia(imgEl1))
 
         await expectAllTensorsReleased(async () => {
           await faceLandmark68Net.detectLandmarks(tensor)
@@ -242,7 +237,7 @@ describeWithBackend('faceLandmark68Net', () => {
       })
 
       it('multiple tf.Tensor3Ds', async () => {
-        const tensors = [imgEl1, imgEl1, imgEl1].map(el => tf.browser.fromPixels(createCanvasFromMedia(el)))
+        const tensors = [imgEl1, imgEl1, imgEl1].map(el => tf.fromPixels(createCanvasFromMedia(el)))
 
 
         await expectAllTensorsReleased(async () => {
@@ -253,7 +248,7 @@ describeWithBackend('faceLandmark68Net', () => {
       })
 
       it('single batch size 1 tf.Tensor4Ds', async () => {
-        const tensor = tf.tidy(() => tf.browser.fromPixels(createCanvasFromMedia(imgEl1)).expandDims()) as tf.Tensor4D
+        const tensor = tf.tidy(() => tf.fromPixels(createCanvasFromMedia(imgEl1)).expandDims()) as tf.Tensor4D
 
         await expectAllTensorsReleased(async () => {
           await faceLandmark68Net.detectLandmarks(tensor)
@@ -264,7 +259,7 @@ describeWithBackend('faceLandmark68Net', () => {
 
       it('multiple batch size 1 tf.Tensor4Ds', async () => {
         const tensors = [imgEl1, imgEl1, imgEl1]
-          .map(el => tf.tidy(() => tf.browser.fromPixels(createCanvasFromMedia(el)).expandDims())) as tf.Tensor4D[]
+          .map(el => tf.tidy(() => tf.fromPixels(createCanvasFromMedia(el)).expandDims())) as tf.Tensor4D[]
 
         await expectAllTensorsReleased(async () => {
           await faceLandmark68Net.detectLandmarks(tensors)

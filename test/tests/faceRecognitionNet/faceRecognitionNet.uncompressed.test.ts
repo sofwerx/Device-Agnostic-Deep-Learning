@@ -1,9 +1,9 @@
 import { createCanvasFromMedia } from '../../../src';
 import { euclideanDistance } from '../../../src/euclideanDistance';
 import { loadImage, loadJson } from '../../env';
-import { describeWithBackend, describeWithNets } from '../../utils';
+import { describeWithNets } from '../../utils';
 
-describeWithBackend('faceRecognitionNet, uncompressed', () => {
+describe('faceRecognitionNet, uncompressed', () => {
 
   let imgEl1: HTMLCanvasElement
   let imgElRect: HTMLCanvasElement

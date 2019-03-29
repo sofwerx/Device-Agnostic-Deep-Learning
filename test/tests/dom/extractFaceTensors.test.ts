@@ -1,13 +1,12 @@
 import { createCanvasFromMedia, extractFaceTensors, Rect, tf } from '../../../src';
 import { loadImage } from '../../env';
-import { describeWithBackend } from '../../utils';
 
-describeWithBackend('extractFaceTensors', () => {
+describe('extractFaceTensors', () => {
 
   let imgTensor: tf.Tensor3D
 
   beforeAll(async () => {
-    imgTensor = tf.browser.fromPixels(createCanvasFromMedia(await loadImage('test/images/face1.png')))
+    imgTensor = tf.fromPixels(createCanvasFromMedia(await loadImage('test/images/face1.png')))
   })
 
   describe('extracts tensors', () => {
