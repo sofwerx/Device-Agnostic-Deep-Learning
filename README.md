@@ -1,5 +1,7 @@
 # Device Agnostic Deep Learning
 
+I used this repo to demonstarte the application of Device Agnostic Deep Learning. This can be done if you develop your deep learning algo for the web browswer. Javascript and WebGl are standard on almost all devices. WebGl will allow for you deep learning algo to run on the GPU on the device. This is how we will be able to deploy machine learning algos and deep learning algos to the edge. Good Luck! 
+
 
 [![Build Status](https://travis-ci.org/justadudewhohacks/face-api.js.svg?branch=master)](https://travis-ci.org/justadudewhohacks/face-api.js)
 [![Slack](https://slack.bri.im/badge.svg)](https://slack.bri.im)
