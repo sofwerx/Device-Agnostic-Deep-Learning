@@ -1,6 +1,6 @@
 # Device Agnostic Deep Learning
 
-I used this repo to demonstarte the application of Device Agnostic Deep Learning. This can be done if you develop your deep learning algo for the web browswer. Javascript and WebGl are standard on almost all devices. WebGL will allow for you deep learning algo to run on the GPU on the device. This is how we will be able to deploy machine learning algos and deep learning algos to the edge. I have tested this technology for on the Nvidia TX-2, Nvidia Xavier, Ubuntu Laptop with 1070GTX, Galaxy S8 and the Pixel 2. Good Luck! 
+I used this repo to demonstarte the application of Device Agnostic Deep Learning. This can be done if you develop your deep learning algo for the web browswer. Javascript and WebGL are standard on almost all devices. WebGL will allow for you deep learning algo to run on the GPU on the device. This is how we will be able to deploy machine learning algos and deep learning algos to the edge. I have tested this technology for on the Nvidia TX-2, Nvidia Xavier, Ubuntu Laptop with 1070GTX, Galaxy S8 and the Pixel 2. Good Luck! 
 
 
 [![Build Status](https://travis-ci.org/justadudewhohacks/face-api.js.svg?branch=master)](https://travis-ci.org/justadudewhohacks/face-api.js)
